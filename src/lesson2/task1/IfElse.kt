@@ -71,10 +71,10 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String = when {
-    age % 100 in 11..20 -> (age.toString() + ' ' + "лет")
-    age % 10 in 2..4 -> (age.toString() + ' ' + "года")
-    age % 10 == 1 -> (age.toString() + ' ' + "год")
-    else -> (age.toString() + ' ' + "лет")
+    age % 100 in 11..20 -> "$age лет"
+    age % 10 in 2..4 -> "$age года"
+    age % 10 == 1 -> "$age год"
+    else -> "$age лет"
 }
 /**
  * Простая (2 балла)
@@ -162,16 +162,18 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
+    val schet = (a * a + b * b + c * c) - maxOf(a, b, c) * maxOf(a, b, c)
+    val gg = maxOf(a, b, c) * maxOf(a, b, c)
     if (((a + b + c) - maxOf(a, b, c)) < maxOf(a, b, c)) {
         return -1
     }
-    if (((a * a + b * b + c * c) - maxOf(a, b, c) * maxOf(a, b, c)) == maxOf(a, b, c) * maxOf(a, b, c)) {
+    if (schet == gg) {
         return 1
     }
-    if (((a * a + b * b + c * c) - maxOf(a, b, c) * maxOf(a, b, c)) > maxOf(a, b, c) * maxOf(a, b, c)) {
+    if (schet > gg) {
         return 0
     }
-    if (((a * a + b * b + c * c) - maxOf(a, b, c) * maxOf(a, b, c)) < maxOf(a, b, c) * maxOf(a, b, c)) {
+    if (schet < gg) {
         return 2
     }
     return 5

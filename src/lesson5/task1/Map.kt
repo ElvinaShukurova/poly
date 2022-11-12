@@ -96,7 +96,10 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *   buildGrades(mapOf("Марат" to 3, "Семён" to 5, "Михаил" to 5))
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
-fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
+fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
+    val list = grades.toList()
+    return list.groupBy({ it.second }, { it.first })
+}
 
 /**
  * Простая (2 балла)
@@ -108,7 +111,17 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "z", "b" to "sweet")) -> true
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
-fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
+fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
+    var count = 0
+    for ((keyA, valueA) in a) {
+        for ((keyB, valueB) in b) {
+            count += 1
+            if (keyA == keyB && valueA == valueB) break
+            if (count == b.count()) return false
+        }
+    }
+    return true
+}
 
 /**
  * Простая (2 балла)
@@ -154,7 +167,15 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = TODO()
  *     mapOf("Emergency" to "911", "Police" to "02")
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
-fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> = TODO()
+fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
+    val result = mapA.toMutableMap()
+    mapB.forEach {
+        var value = result[it.key]
+        value = if ((value == null) or (value == it.value)) it.value else value + ", ${it.value}"
+        result[it.key] = value
+    }
+    return result
+}
 
 /**
  * Средняя (4 балла)
