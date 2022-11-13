@@ -5,6 +5,7 @@ package lesson4.task1
 import kotlinx.html.attributes.stringSetDecode
 import lesson1.task1.discriminant
 import ru.spbstu.kotlin.generate.assume.retry
+import ru.spbstu.ktuples.Variant
 import kotlin.math.pow
 import kotlin.math.sign
 import kotlin.math.sqrt
@@ -331,7 +332,25 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    var number = n
+    val alp = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
+    val values = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
+    var i = values.size - 1
+    val s = StringBuilder()
+    do {
+        if (number / values[i] > 0) {
+            s.append(alp[i].repeat(number / values[i]))
+            number %= values[i]
+
+        }
+        else {
+            i -= 1
+        }
+    }
+        while (number > 0)
+        return s.toString()
+}
 
 /**
  * Очень сложная (7 баллов)

@@ -2,6 +2,9 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+import java.lang.IndexOutOfBoundsException
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -74,7 +77,38 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val newstr = str.split(" ")
+    val den = newstr[0].toInt()
+    val alp = listOf(
+        "января",
+        "февраля",
+        "марта",
+        "апреля",
+        "мая",
+        "июня",
+        "июля",
+        "августа",
+        "сентября",
+        "октября",
+        "ноября",
+        "декабря"
+    )
+    var god = 0
+    try {
+        god = newstr[2].toInt()
+    } catch (e: IndexOutOfBoundsException) {
+        return ""
+    }
+    var mes = alp.indexOf(newstr[1])
+    if (mes == -1) return ""
+    else mes += 1
+    if (den > daysInMonth(mes, god)) {
+        return ""
+    } else {
+        return String.format("%02d.%02d.%d", den, mes, god)
+    }
+}
 
 /**
  * Средняя (4 балла)
