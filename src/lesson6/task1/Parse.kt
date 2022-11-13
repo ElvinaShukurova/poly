@@ -94,6 +94,7 @@ fun dateStrToDigit(str: String): String {
         "ноября",
         "декабря"
     )
+    if (newstr.size != 3) return ""
     var god = 0
     try {
         god = newstr[2].toInt()
