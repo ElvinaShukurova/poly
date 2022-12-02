@@ -124,11 +124,11 @@ fun circleInside(
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     val kub = listOf(a, b, c)
     val q = kub.sorted()
-    val kub3 = listOf(r, s)
-    if ((q.indexOf(0) <= kub3.max()) && (kub.min() <= kub3.min())) {
+    val dira = listOf(r, s)
+    if ((q[2] <= dira.max()) && (q[0] <= dira.min())) {
         return true
     }
-    if ((q.indexOf(1) <= kub3.max()) && (kub.min() <= kub3.min())) {
+    if ((q[1] <= dira.max()) && (q[0] <= dira.min())) {
         return true
     }
     return false
