@@ -80,7 +80,7 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String {
-    val stroka = Regex("""\d{1,2}\s[а-я]*\s\d{1,4}""")
+    val stroka = Regex("""\d{1,2}\s[а-я]*\s\d+""")
     val h = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
     if (! str.matches(stroka)) return ""
     val (d, m, y) = str.split(" ")
