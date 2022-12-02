@@ -5,6 +5,7 @@ package lesson6.task1
 import lesson2.task2.daysInMonth
 import java.lang.IllegalArgumentException
 import java.lang.IndexOutOfBoundsException
+import java.util.InvalidPropertiesFormatException
 
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
@@ -79,38 +80,18 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String {
-    val newstr = str.split(" ")
-    val den = newstr[0].toInt()
-    val alp = listOf(
-        "января",
-        "февраля",
-        "марта",
-        "апреля",
-        "мая",
-        "июня",
-        "июля",
-        "августа",
-        "сентября",
-        "октября",
-        "ноября",
-        "декабря"
-    )
-    if (newstr.size != 3) return ""
-    var god = 0
-    try {
-        god = newstr[2].toInt()
-    } catch (e: IndexOutOfBoundsException) {
-        return ""
-    }
-    var mes = alp.indexOf(newstr[1])
-    if (mes == -1) return ""
-    else mes += 1
-    if (den > daysInMonth(mes, god)) {
-        return ""
-    } else {
-        return String.format("%02d.%02d.%d", den, mes, god)
-    }
+    val stroka = Regex("""\d{1,2}\s[а-я]*\s\d{1,4}""")
+    val h = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
+    if (! str.matches(stroka)) return ""
+    val (d, m, y) = str.split(" ")
+    val day = d.toInt()
+    val year = y.toInt()
+    val mon = h.indexOf(m)+1
+    if (mon == 0) return ""
+    if (day > daysInMonth(mon, year)) return ""
+    return "${twoDigitStr(day)}.${twoDigitStr(mon)}.$year"
 }
+
 
 /**
  * Средняя (4 балла)
