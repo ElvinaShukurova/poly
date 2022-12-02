@@ -3,6 +3,9 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
+import java.lang.Math.pow
+import java.lang.Math.sqrt
+import kotlin.math.pow
 
 /**
  * Пример
@@ -105,7 +108,8 @@ fun circleInside(
         return false
     }
     else {
-        if ((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1) < (r2 - r1) * (r2 - r1)) {
+        val distance = sqrt((x2-x1).pow(2.0) + (y2 - y1).pow(2.0))
+        if (r2 >= distance + r1) {
             return true
         }
     }
