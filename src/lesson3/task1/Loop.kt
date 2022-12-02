@@ -2,6 +2,8 @@
 
 package lesson3.task1
 
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -76,9 +78,10 @@ fun digitNumber(n: Int): Int {
     var kol = 0
     var number = n
     do {
-        kol++
+        kol += 1
         number /= 10
-    }while (number != 0)
+    }
+    while (number != 0)
     return kol
 }
 
@@ -89,17 +92,13 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    var count = 2
-    var number = 1
-    var pastNumber = 1
-    var tmp = 0
-    while(count < n) {
-        tmp = number
-        number += pastNumber
-        pastNumber = tmp
-        count++
+    var f = 0
+    var d = 1
+    var n = n-1
+    repeat(n) {
+        d += f.also { f = d }
     }
-    return number
+    return d
 }
 
 /**
@@ -108,9 +107,8 @@ fun fib(n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var minDiv = 2
     for(i in 2..n) {
-        if(minDiv % i == 0) {
+        if(n % i == 0) {
             return i
         }
     }
@@ -121,7 +119,14 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    for (i in 2 .. n - 1) {
+        if (n % i == 0) {
+            return (n / i)
+        }
+    }
+    return 1
+}
 
 /**
  * Простая (2 балла)
@@ -147,7 +152,21 @@ fun collatzSteps(x: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    val d = max(m,n)
+    val g = min(m,n)
+    if (d % g == 0) {
+        return d
+    }
+    else {
+        for (k in 2 .. d) {
+            if (d * k % g == 0) {
+                return (d * k)
+            }
+        }
+    }
+    return 1
+}
 
 /**
  * Средняя (3 балла)
