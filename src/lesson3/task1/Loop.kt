@@ -226,7 +226,20 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    var x = x % (2 * PI) // sin(x + 2*PI*k) = sin(x)
+    var f = 1.0
+    var i = 1.0
+    var cur = x
+    var ans = 0.0
+    while (abs(cur) >= eps) {
+        ans += cur
+        i += 2
+        f *= - i * (i - 1)
+        cur = pow(x, i) / f
+    }
+    return ans
+}
 
 /**
  * Средняя (4 балла)
@@ -237,7 +250,20 @@ fun sin(x: Double, eps: Double): Double = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.cos и другие стандартные реализации функции косинуса в этой задаче запрещается.
  */
-fun cos(x: Double, eps: Double): Double = TODO()
+fun cos(x: Double, eps: Double): Double {
+    var x = x % (2 * PI)
+    var f = 1.0
+    var i = 0.0
+    var cur = 1.0
+    var ans = 0.0
+    while (abs(cur) >= eps) {
+        ans += cur
+        i += 2
+        f *= - i * (i - 1)
+        cur = pow(x, i) / f
+    }
+    return ans
+}
 
 /**
  * Сложная (4 балла)
@@ -248,7 +274,16 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var i = 1.0
+    var dlin = 0.0
+    while (dlin < n) {
+        dlin += ceil(log(i * i, 10.0) + .00000001)
+        i += 1
+    }
+    i -= 1
+    return ((((i * i) / 10.0.pow(dlin - n)) % 10.0)).toInt()
+}
 
 /**
  * Сложная (5 баллов)
@@ -259,4 +294,13 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var f1 = 0.0
+    var f2 = 1.0
+    var dlin = 0.0
+    while (dlin < n) {
+        dlin += ceil(log(f2, 10.0) + 0.000000001)
+        f1 = f2.also { f2 += f1 }
+    }
+    return (f1 / 10.0.pow(dlin - n) % 10.0).toInt()
+}
