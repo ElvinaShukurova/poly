@@ -187,9 +187,9 @@ fun revert(n: Int): Int
 {
     var num = 0
     var initial = n
-    while(initial > 0) {
+    while (initial > 0) {
         num *= 10
-        num += initial%10
+        num += initial % 10
         initial /= 10
     }
     return num

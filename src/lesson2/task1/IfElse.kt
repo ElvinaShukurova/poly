@@ -3,8 +3,6 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
-import lesson1.task1.sqr
-import ru.spbstu.kotlin.generate.assume.retry
 import kotlin.math.max
 import kotlin.math.sqrt
 
@@ -162,18 +160,18 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    val schet = (a * a + b * b + c * c) - maxOf(a, b, c) * maxOf(a, b, c)
-    val gg = maxOf(a, b, c) * maxOf(a, b, c)
+    val d = (a * a + b * b + c * c) - maxOf(a, b, c) * maxOf(a, b, c)
+    val g = maxOf(a, b, c) * maxOf(a, b, c)
     if (((a + b + c) - maxOf(a, b, c)) < maxOf(a, b, c)) {
         return -1
     }
-    if (schet == gg) {
+    if (d == g) {
         return 1
     }
-    if (schet > gg) {
+    if (d > g) {
         return 0
     }
-    if (schet < gg) {
+    if (d < g) {
         return 2
     }
     return 5
@@ -188,28 +186,17 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    if ((a == d) || (c == b)) {
-        return 0
-    }
-    if ((c in a..b) && (d > b)) {
-        return (b - c)
-    }
-    if ((d in a..b) && (c < a)) {
-        return (d - a)
-    }
-    if ((c in a..b) && (d in a..b)) {
-        return (d - c)
-    }
-    if ((a in c..d) && (b in c..d)) {
-        return (b - a)
-    }
-    if ((a == b) && (a in c..d)) {
-        return 1
-    }
-    if ((c == d) && (c in a..b)) {
-        return 1
-    }
-    else {
-        return -1
+    return if ((a == d) || (c == b)) {
+        0
+    } else if ((c in a..b) && (d > b)) {
+        (b - c)
+    } else if ((d in a..b) && (c < a)) {
+        (d - a)
+    } else if ((c in a..b) && (d in a..b)) {
+        (d - c)
+    } else if ((a in c..d) && (b in c..d)) {
+        (b - a)
+    } else {
+        -1
     }
 }

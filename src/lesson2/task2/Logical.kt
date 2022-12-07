@@ -3,7 +3,6 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
-import java.lang.Math.pow
 import java.lang.Math.sqrt
 import kotlin.math.pow
 
@@ -49,49 +48,39 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
 fun daysInMonth(month: Int, year: Int): Int {
-    if (((year % 100 != 0) and (year % 4 == 0)) or (year % 400 == 0)) {
+    if (((year % 100 != 0) && (year % 4 == 0)) || (year % 400 == 0)) {
         if (month == 2) {
             return 29
         }
         if (month <= 7) {
-            if (month % 2 == 1) {
-                return 31
-            }
-            else {
-                return 30
-            }
-        }
-        if (month > 7) {
-            if (month % 2 == 0) {
-                return 31
-            }
-            else {
-                return 30
+            return if (month % 2 == 1) {
+                31
+            } else {
+                30
             }
         }
-    }
-    else {
+        return if (month % 2 == 0) {
+            31
+        } else {
+            30
+        }
+    } else {
         if (month == 2) {
             return 28
         }
         if (month <= 7) {
-            if (month % 2 == 1) {
-                return 31
-            }
-            else {
-                return 30
+            return if (month % 2 == 1) {
+                31
+            } else {
+                30
             }
         }
-        if (month > 7) {
-            if (month % 2 == 0) {
-                return 31
-            }
-            else {
-                return 30
-            }
+        return if (month % 2 == 0) {
+            31
+        } else {
+            30
         }
     }
-    return 1234567890
 }
 /**
  * Простая (2 балла)
@@ -126,13 +115,13 @@ fun circleInside(
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    val kub = listOf(a, b, c)
-    val q = kub.sorted()
-    val dira = listOf(r, s)
-    if ((q[2] <= dira.max()) && (q[0] <= dira.min())) {
+    val cube = listOf(a, b, c)
+    val sortedCube = cube.sorted()
+    val hole = listOf(r, s)
+    if ((sortedCube[2] <= hole.max()) && (sortedCube[0] <= hole.min())) {
         return true
     }
-    if ((q[1] <= dira.max()) && (q[0] <= dira.min())) {
+    if ((sortedCube[1] <= hole.max()) && (sortedCube[0] <= hole.min())) {
         return true
     }
     return false
