@@ -5,6 +5,7 @@ package lesson6.task1
 import lesson2.task2.daysInMonth
 import java.lang.IllegalArgumentException
 import java.lang.IndexOutOfBoundsException
+import java.lang.StringBuilder
 import java.util.InvalidPropertiesFormatException
 
 // Урок 6: разбор строк, исключения
@@ -147,8 +148,27 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
-
+fun bestHighJump(jumps: String): Int {
+    if (!jumps.matches(Regex("""(\d+ [%+-]+ )*\d+ [%+-]+"""))) return -1
+    else {
+        var str = jumps.split(" ")
+        var mmaaaax = 0
+        var cis = 0
+        for (i in str) {
+            if (i.matches(Regex("""\d+"""))) {
+                cis = i.toInt()
+            }
+            else {
+                if (i == "+"){
+                    if (cis > mmaaaax) {
+                        mmaaaax = cis
+                    }
+                }
+            }
+        }
+        return mmaaaax
+    }
+}
 /**
  * Сложная (6 баллов)
  *
