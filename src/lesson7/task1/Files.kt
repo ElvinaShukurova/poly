@@ -87,15 +87,17 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
     val list = File(inputName).readLines().map { it.lowercase() }
     for (i in substrings) ans[i] = 0
     for (i in 0..substrings.size - 1) {
+        var k = 0
         val slc = substrings[i].lowercase()
         for (ln in list) {
             var j = ln.indexOf(slc)
             while (j != -1) {
                 j++
                 j = ln.indexOf(slc, j)
-                ans[substrings[i]] = ans[substrings[i]]!! + 1
+                k++
             }
         }
+        ans[substrings[i]] = k
     }
     return ans
 }
