@@ -89,12 +89,11 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
     for (i in 0..substrings.size - 1) {
         val slc = substrings[i].lowercase()
         for (ln in list) {
-            var k = -1
-            for (j in 0..ln.length) {
-                if (k != ln.indexOf(slc, j) && ln.indexOf(slc, j) != -1) {
-                    ans[substrings[i]] = ans[substrings[i]]!! + 1
-                }
-                k = ln.indexOf(slc, j)
+            var j = ln.indexOf(slc)
+            while (j != -1) {
+                j++
+                j = ln.indexOf(slc, j)
+                ans[substrings[i]] = ans[substrings[i]]!! + 1
             }
         }
     }
