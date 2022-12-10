@@ -149,6 +149,9 @@ fun centerFile(inputName: String, outputName: String) {
         k = " ".repeat(c) + i
         writer.write(k)
         writer.newLine()
+        if (i == "") {
+            writer.write(i)
+        }
     }
     writer.close()
 }
