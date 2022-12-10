@@ -144,10 +144,10 @@ fun centerFile(inputName: String, outputName: String) {
     var c = 0
     var k = ""
     for (i in list) {
+        val i = i.trim()
         if (i == "") {
             writer.write(i)
         }
-        val i = i.trim()
         c = (d - i.length) / 2
         k = " ".repeat(c) + i
         writer.write(k)
