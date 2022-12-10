@@ -184,18 +184,16 @@ fun alignFileByWidth(inputName: String, outputName: String) {
     val writer = File(outputName).bufferedWriter()
     val k = list.maxOfOrNull { it.split(Regex("""\s+""")).joinToString(" ").length }
     for (i in list) {
-        if (i.split(Regex("""\s+""")).size <= 1) {
-            writer.write(i.split(Regex("""\s+""")).joinToString(""))
+        val words = i.split(Regex("""\s+"""))
+        if (words.size <= 1) {
+            writer.write(words.joinToString(""))
             writer.newLine()
         } else {
-            val h = i.split(Regex("""\s+""")).joinToString("")
-            var c = 0
-            var g = 0
-            var l = 0
-            c = k!! - h.length
-            l = c / (i.split(Regex("""\s+""")).size - 1)
-            g = c % (i.split(Regex("""\s+""")).size - 1)
-            for (j in i.split(Regex("""\s+""")).slice(0.. (i.split(Regex("""\s+""")).size - 2))) {
+            val h = words.joinToString("")
+            val c = k!! - h.length
+            val l = c / (words.size - 1)
+            var g = c % (words.size - 1)
+            for (j in words.slice(0.. (words.size - 2))) {
                 writer.write(j)
                 writer.write(" ".repeat(l))
                 if (g != 0) {
@@ -203,7 +201,7 @@ fun alignFileByWidth(inputName: String, outputName: String) {
                     g--
                 }
             }
-            writer.write(i.split(Regex("""\s+""")).last())
+            writer.write(words.last())
             writer.newLine()
         }
     }
