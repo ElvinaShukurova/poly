@@ -140,11 +140,11 @@ fun sibilants(inputName: String, outputName: String) {
 fun centerFile(inputName: String, outputName: String) {
     val list = File(inputName).readLines().map { it.trim() }
     File(outputName).bufferedWriter().use { writer ->
-        val d = list.maxOf { it.length }
+        val d = list.maxOfOrNull { it.length }
         var c = 0
         var k = ""
         for (i in list) {
-            c = (d - i.length) / 2
+            c = (d!! - i.length) / 2
             k = " ".repeat(c) + i
             writer.write(k)
             writer.newLine()
@@ -182,7 +182,7 @@ fun centerFile(inputName: String, outputName: String) {
 fun alignFileByWidth(inputName: String, outputName: String) {
     val list = File(inputName).readLines().map { it.trim() }
     File(outputName).bufferedWriter().use { writer ->
-        val maxLen = list.maxOf { it.split(Regex("""\s+""")).joinToString(" ").length }
+        val maxLen = list.maxOfOrNull { it.split(Regex("""\s+""")).joinToString(" ").length }
         for (i in list) {
             val words = i.split(Regex("""\s+"""))
             if (words.size <= 1) {
@@ -190,7 +190,7 @@ fun alignFileByWidth(inputName: String, outputName: String) {
                 writer.newLine()
             } else {
                 val wrds = words.joinToString("")
-                val difLen = maxLen - wrds.length
+                val difLen = maxLen!! - wrds.length
                 val div = difLen / (words.size - 1)
                 var mod = difLen % (words.size - 1)
                 for (j in words.slice(0..(words.size - 2))) {
