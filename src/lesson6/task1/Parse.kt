@@ -4,9 +4,6 @@ package lesson6.task1
 
 import lesson2.task2.daysInMonth
 import java.lang.IllegalArgumentException
-import java.lang.IndexOutOfBoundsException
-import java.lang.StringBuilder
-import java.util.InvalidPropertiesFormatException
 
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
@@ -80,9 +77,9 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
+val h = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
+val stroka = Regex("""\d{1,2}\s[а-я]*\s\d+""")
 fun dateStrToDigit(str: String): String {
-    val stroka = Regex("""\d{1,2}\s[а-я]*\s\d+""")
-    val h = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
     if (! str.matches(stroka)) return ""
     val (d, m, y) = str.split(" ")
     val day = d.toInt()
@@ -150,25 +147,23 @@ fun bestLongJump(jumps: String): Int {
  */
 fun bestHighJump(jumps: String): Int {
     if (!jumps.matches(Regex("""(\d+ [%+-]+ )*\d+ [%+-]+"""))) return -1
-    else {
-        var str = jumps.split(" ")
-        var mmaaaax = 0
-        var cis = 0
-        for (i in str) {
-            if (i.matches(Regex("""\d+"""))) {
-                cis = i.toInt()
-            }
-            else {
-                if (i == "+"){
-                    if (cis > mmaaaax) {
-                        mmaaaax = cis
-                    }
+    val str = jumps.split(" ")
+    var maxHeight = 0
+    var number = 0
+    for (i in str) {
+        if (i.matches(Regex("""\d+"""))) {
+            number = i.toInt()
+        } else {
+            if (i == "+") {
+                if (number > maxHeight) {
+                    maxHeight = number
                 }
             }
         }
-        return mmaaaax
     }
+    return maxHeight
 }
+
 /**
  * Сложная (6 баллов)
  *
@@ -180,23 +175,21 @@ fun bestHighJump(jumps: String): Int {
  */
 fun plusMinus(expression: String): Int {
     if (!expression.matches(Regex("""(\d+ [+-]{1} )*\d+"""))) throw IllegalArgumentException()
-    else {
-        var primer = expression.split(" ")
-        var ans = primer[0].toInt()
-        var cis = 0
-        var i = 0
-        while (i < primer.size) {
-            if (primer[i] == "+") {
-                ans += primer[i + 1].toInt()
-            }
-            if (primer[i] == "-") {
-                ans -= primer[i + 1].toInt()
-            }
-            i++
+    val primer = expression.split(" ")
+    var ans = primer[0].toInt()
+    var i = 0
+    while (i < primer.size) {
+        if (primer[i] == "+") {
+            ans += primer[i + 1].toInt()
         }
-        return ans
+        if (primer[i] == "-") {
+            ans -= primer[i + 1].toInt()
+        }
+        i++
     }
+    return ans
 }
+
 
 /**
  * Сложная (6 баллов)
@@ -208,7 +201,6 @@ fun plusMinus(expression: String): Int {
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
 fun firstDuplicateIndex(str: String): Int = TODO()
-
 /**
  * Сложная (6 баллов)
  *

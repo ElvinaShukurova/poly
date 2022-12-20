@@ -160,21 +160,18 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    val d = (a * a + b * b + c * c) - maxOf(a, b, c) * maxOf(a, b, c)
-    val g = maxOf(a, b, c) * maxOf(a, b, c)
+    val cathets = (a * a + b * b + c * c) - maxOf(a, b, c) * maxOf(a, b, c)
+    val hypotenuse = maxOf(a, b, c) * maxOf(a, b, c)
     if (((a + b + c) - maxOf(a, b, c)) < maxOf(a, b, c)) {
         return -1
     }
-    if (d == g) {
+    if (cathets == hypotenuse) {
         return 1
     }
-    if (d > g) {
+    if (cathets > hypotenuse) {
         return 0
     }
-    if (d < g) {
-        return 2
-    }
-    return 5
+    return 2
 }
 
 /**

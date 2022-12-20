@@ -63,14 +63,14 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Подчёркивание в середине и/или в конце строк значения не имеет.
  */
 fun deleteMarked(inputName: String, outputName: String) {
-    var writer = File(outputName).bufferedWriter()
-    for (line in File(inputName).readLines()) {
-        if ((line == "") || (line[0] != '_')) {
-            writer.write(line)
-            writer.newLine()
+    File(outputName).bufferedWriter().use { writer ->
+        for (line in File(inputName).readLines()) {
+            if ((line == "") || (line[0] != '_')) {
+                writer.write(line)
+                writer.newLine()
+            }
         }
     }
-    writer.close()
 }
 
 /**
@@ -84,12 +84,12 @@ fun deleteMarked(inputName: String, outputName: String) {
  */
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
     val ans = mutableMapOf<String, Int>()
-    val list = File(inputName).readLines().map { it.lowercase() }
+    val str = File(inputName).readLines().map { it.lowercase() }
     for (i in substrings) ans[i] = 0
     for (i in 0..substrings.size - 1) {
         var k = 0
         val slc = substrings[i].lowercase()
-        for (ln in list) {
+        for (ln in str) {
             var j = ln.indexOf(slc)
             while (j != -1) {
                 j++
@@ -138,18 +138,18 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    val list = File(inputName).readLines().map {it.trim()}
-    val writer = File(outputName).bufferedWriter()
-    val d = list.maxOfOrNull {it.length}
-    var c = 0
-    var k = ""
-    for (i in list) {
-        c = (d!! - i.length) / 2
-        k = " ".repeat(c) + i
-        writer.write(k)
-        writer.newLine()
+    val list = File(inputName).readLines().map { it.trim() }
+    File(outputName).bufferedWriter().use { writer ->
+        val d = list.maxOf { it.length }
+        var c = 0
+        var k = ""
+        for (i in list) {
+            c = (d - i.length) / 2
+            k = " ".repeat(c) + i
+            writer.write(k)
+            writer.newLine()
+        }
     }
-    writer.close()
 }
 
 /**
@@ -181,31 +181,31 @@ fun centerFile(inputName: String, outputName: String) {
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
     val list = File(inputName).readLines().map { it.trim() }
-    val writer = File(outputName).bufferedWriter()
-    val k = list.maxOfOrNull { it.split(Regex("""\s+""")).joinToString(" ").length }
-    for (i in list) {
-        val words = i.split(Regex("""\s+"""))
-        if (words.size <= 1) {
-            writer.write(words.joinToString(""))
-            writer.newLine()
-        } else {
-            val h = words.joinToString("")
-            val c = k!! - h.length
-            val l = c / (words.size - 1)
-            var g = c % (words.size - 1)
-            for (j in words.slice(0.. (words.size - 2))) {
-                writer.write(j)
-                writer.write(" ".repeat(l))
-                if (g != 0) {
-                    writer.write(" ")
-                    g--
+    File(outputName).bufferedWriter().use { writer ->
+        val maxLen = list.maxOf { it.split(Regex("""\s+""")).joinToString(" ").length }
+        for (i in list) {
+            val words = i.split(Regex("""\s+"""))
+            if (words.size <= 1) {
+                writer.write(words.joinToString(""))
+                writer.newLine()
+            } else {
+                val wrds = words.joinToString("")
+                val difLen = maxLen - wrds.length
+                val div = difLen / (words.size - 1)
+                var mod = difLen % (words.size - 1)
+                for (j in words.slice(0..(words.size - 2))) {
+                    writer.write(j)
+                    writer.write(" ".repeat(div))
+                    if (mod != 0) {
+                        writer.write(" ")
+                        mod--
+                    }
                 }
+                writer.write(words.last())
+                writer.newLine()
             }
-            writer.write(words.last())
-            writer.newLine()
         }
     }
-    writer.close()
 }
 
 /**
@@ -512,4 +512,3 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     TODO()
 }
-

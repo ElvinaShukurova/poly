@@ -2,12 +2,8 @@
 
 package lesson4.task1
 
-import kotlinx.html.attributes.stringSetDecode
 import lesson1.task1.discriminant
-import ru.spbstu.kotlin.generate.assume.retry
-import ru.spbstu.ktuples.Variant
 import kotlin.math.pow
-import kotlin.math.sign
 import kotlin.math.sqrt
 
 // Урок 4: списки
@@ -149,7 +145,7 @@ fun mean(list: List<Double>): Double {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double>  {
-    var mean = (list.sum() / list.size)
+    val mean = (list.sum() / list.size)
     for (i in 0 .. list.size - 1) {
         list[i] -= mean
     }
@@ -165,7 +161,6 @@ fun center(list: MutableList<Double>): MutableList<Double>  {
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.
  */
 fun times(a: List<Int>, b: List<Int>): Int {
-    var proiz: Int = 0
     var product = 0
     for (i in 0 .. a.size - 1) {
         product += a[i] * b[i]
@@ -182,12 +177,11 @@ fun times(a: List<Int>, b: List<Int>): Int {
  * Значение пустого многочлена равно 0 при любом x.
  */
 fun polynom(p: List<Int>, x: Int): Int {
-    var ggjj: Int = 0
-    var gg = 0
+    var ans = 0
     for (i in 0 .. p.size - 1) {
-        gg += p[i] * x.toDouble().pow(i).toInt()
+        ans += p[i] * x.toDouble().pow(i).toInt()
     }
-    return gg
+    return ans
 }
 
 /**
@@ -216,14 +210,13 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  */
 fun factorize(n: Int): List<Int> {
     var divider = 2
-    var list = mutableListOf<Int>()
+    val list = mutableListOf<Int>()
     var num = n
     while (num != 1) {
         if (num % divider == 0) {
             list.add(divider)
             num /= divider
-        }
-        else{
+        } else {
             divider += 1
         }
     }
@@ -249,15 +242,14 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
 fun convert(n: Int, base: Int): List<Int> {
-    var numbers = mutableListOf<Int>()
-    var gg = n
+    val numbers = mutableListOf<Int>()
+    var g = n
     if (n == 0){
         numbers.add(0)
-    }
-    else {
-        while (gg > 0) {
-            numbers.add(gg % base)
-            gg /= base
+    } else {
+        while (g > 0) {
+            numbers.add(g % base)
+            g /= base
         }
         numbers.reverse()
     }
@@ -276,8 +268,8 @@ fun convert(n: Int, base: Int): List<Int> {
  * (например, n.toString(base) и подобные), запрещается.
  */
 fun convertToString(n: Int, base: Int): String {
-    var list = mutableListOf<Int>()
-    var spisok = StringBuilder()
+    val list = mutableListOf<Int>()
+    val spisok = StringBuilder()
     var number = n
     if (number == 0){
         list.add(0)
@@ -332,24 +324,22 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
+val alp = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
+val values = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
 fun roman(n: Int): String {
     var number = n
-    val alp = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
-    val values = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
     var i = values.size - 1
     val s = StringBuilder()
-    do {
+    while (number > 0) {
         if (number / values[i] > 0) {
             s.append(alp[i].repeat(number / values[i]))
             number %= values[i]
 
-        }
-        else {
+        } else {
             i -= 1
         }
     }
-        while (number > 0)
-        return s.toString()
+    return s.toString()
 }
 
 /**
